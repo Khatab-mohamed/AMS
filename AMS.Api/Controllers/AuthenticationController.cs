@@ -1,54 +1,65 @@
-﻿using AMS.Application.Services.Authentication;
-using AMS.Contracts.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using AMS.Application.Authentication.Common;
+using AMS.Application.Authentication.Queries.Login;
+using AMS.Domain.Common.Errors;
 
 namespace AMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : ApiController
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly ISender _mediator;
 
-        public AuthenticationController(IAuthenticationService authenticationService) => _authenticationService = authenticationService;
+        public AuthenticationController(ISender mediator) => _mediator = mediator;
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var authResult = _authenticationService.Register(
+
+            var command = new RegisterCommand(
                 request.FirstName,
                  request.LastName,
                  request.Email,
                   request.Password);
 
-            var response = new AuthenticateResponse(
-                authResult.Id,
-                authResult.FirstName,
-                authResult.LastName,
-                authResult.Email,
-                authResult.Token);
+            var  authResult =  await _mediator.Send(command);
 
-            return Ok(response);
+            return authResult.MatchFirst(
+                authResult=> Ok(MapAuthResult(authResult)),
+                firstError=> Problem(statusCode:StatusCodes.Status409Conflict,title:firstError.Description));
         }
 
+        
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequset request)
+        public async Task<IActionResult> Login(LoginRequset request)
         {
+            var query = new LoginQuery(
+                request.Email,
+                request.Password);
+            var authResult = await _mediator.Send(query);
 
-            var authResult = _authenticationService.Login(
-                 request.Email,
-                  request.Password);
+            if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
+            {
+                return Problem(
+                    statusCode: StatusCodes.Status401Unauthorized,
+                    title: authResult.FirstError.Description);
+            }
 
-            var response = new AuthenticateResponse(
-                authResult.Id,
-                authResult.FirstName,
-                authResult.LastName,
-                authResult.Email,
-                authResult.Token);
 
-            return Ok(response);
+            return authResult.Match(
+                authResult => Ok(MapAuthResult(authResult)),
+                errors => Problem(errors));
         }
+
+
+        private static AuthenticateResponse MapAuthResult(AuthenticateResult authenticateResult) =>
+            new(
+                authenticateResult.User.Id,
+                authenticateResult.User.FullName,
+                authenticateResult.User.FullName,
+                authenticateResult.User.Email,
+                authenticateResult.Token);
+
     }
 }

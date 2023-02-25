@@ -1,9 +1,8 @@
-﻿using AMS.Application.Common.Interfaces;
-using AMS.Application.Common.Interfaces.Authentication;
-using AMS.Infrastructure.Authentication;
-using AMS.Infrastructure.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
+﻿
+
+using AMS.Application.Common.Interfaces.Persistence;
+using AMS.Infrastructure.Persistence;
+
 namespace AMS.Infrastructure;
 public static class DependencyInjection
 {
@@ -12,8 +11,9 @@ public static class DependencyInjection
     {
         services.Configure<JWTSettings>(configuration.GetSection(JWTSettings.SectionName));
 
-        services.AddSingleton<IJWTTokenGenerator, JWTTokenGenerator>();
+        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
 
 
