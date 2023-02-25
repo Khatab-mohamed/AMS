@@ -3,14 +3,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services
+    .AddPresentation()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
-
-builder.Services.AddSingleton<ProblemDetailsFactory, AmsProblemDetailsFactory>();
 var app = builder.Build();
 
 

@@ -1,7 +1,5 @@
 namespace AMS.Contracts.Authentication;
-public record LoginRequset(
-    string FirstName,
-    string LastName,
+public record LoginRequest(
     string Email,
     string Password
 );

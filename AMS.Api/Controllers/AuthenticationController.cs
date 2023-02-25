@@ -1,5 +1,4 @@
-﻿using AMS.Application.Authentication.Common;
-using AMS.Application.Authentication.Queries.Login;
+﻿using AMS.Application.Authentication.Queries.Login;
 using AMS.Domain.Common.Errors;
 
 namespace AMS.Api.Controllers
@@ -10,33 +9,33 @@ namespace AMS.Api.Controllers
     {
         private readonly ISender _mediator;
 
-        public AuthenticationController(ISender mediator) => _mediator = mediator;
+        private readonly IMapper _mapper;
+
+        public AuthenticationController(ISender mediator, IMapper mapper)
+        {
+            _mediator = mediator;
+            _mapper = mapper;
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
 
-            var command = new RegisterCommand(
-                request.FirstName,
-                 request.LastName,
-                 request.Email,
-                  request.Password);
+            var command = _mapper.Map<RegisterCommand>(request);
 
             var  authResult =  await _mediator.Send(command);
 
             return authResult.MatchFirst(
-                authResult=> Ok(MapAuthResult(authResult)),
+                authenticateResult => Ok(_mapper.Map<AuthenticateResponse>(authenticateResult)),
                 firstError=> Problem(statusCode:StatusCodes.Status409Conflict,title:firstError.Description));
         }
 
         
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequset request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            var query = new LoginQuery(
-                request.Email,
-                request.Password);
+            var query = _mapper.Map<LoginQuery>(request);
             var authResult = await _mediator.Send(query);
 
             if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
@@ -48,18 +47,8 @@ namespace AMS.Api.Controllers
 
 
             return authResult.Match(
-                authResult => Ok(MapAuthResult(authResult)),
+                authenticateResult => Ok(_mapper.Map<AuthenticateResponse>(authenticateResult)),
                 errors => Problem(errors));
         }
-
-
-        private static AuthenticateResponse MapAuthResult(AuthenticateResult authenticateResult) =>
-            new(
-                authenticateResult.User.Id,
-                authenticateResult.User.FullName,
-                authenticateResult.User.FullName,
-                authenticateResult.User.Email,
-                authenticateResult.Token);
-
     }
 }

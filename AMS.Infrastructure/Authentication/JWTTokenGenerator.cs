@@ -1,6 +1,4 @@
 ﻿
-using AMS.Domain.Entities.Authentication;
-
 namespace AMS.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator

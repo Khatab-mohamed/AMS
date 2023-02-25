@@ -1,9 +1,4 @@
-﻿
-
-using AMS.Application.Common.Interfaces.Persistence;
-using AMS.Domain.Entities.Authentication;
-
-namespace AMS.Infrastructure.Persistence;
+﻿namespace AMS.Infrastructure.Persistence;
 
 public class UserRepository : IUserRepository
 {

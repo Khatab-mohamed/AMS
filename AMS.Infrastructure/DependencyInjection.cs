@@ -1,9 +1,4 @@
-﻿
-
-using AMS.Application.Common.Interfaces.Persistence;
-using AMS.Infrastructure.Persistence;
-
-namespace AMS.Infrastructure;
+﻿namespace AMS.Infrastructure;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
