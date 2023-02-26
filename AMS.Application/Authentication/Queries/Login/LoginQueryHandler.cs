@@ -1,6 +1,4 @@
-﻿using AMS.Application.Authentication.Common;
-
-namespace AMS.Application.Authentication.Queries.Login;
+﻿namespace AMS.Application.Authentication.Queries.Login;
 
 public class LoginQueryHandler :
     IRequestHandler<LoginQuery, ErrorOr<AuthenticateResult>>
@@ -17,19 +15,20 @@ public class LoginQueryHandler :
 
     public async Task<ErrorOr<AuthenticateResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
-        if (_userRepository.GetUserByEmail(query.Email, query.Password) is not { } user)
+        var useByEmail = _userRepository.GetUserByEmail(query.Email, query.Password);
+        if (useByEmail is  { })
         {
-            throw new Exception("User With Given email doesn't exist.");
+            return Errors.Authentication.InvalidCredentials;
         }
 
-        if (user.Password != query.Password)
+        if (useByEmail?.Password != query.Password)
         {
-            throw new Exception("Invalid password.");
+            return Errors.Authentication.InvalidCredentials;
         }
 
-        var token = _jWtTokenGenerator.GenerateToken(user);
+        var token = _jWtTokenGenerator.GenerateToken(useByEmail);
         return new AuthenticateResult(
-            user,
+            useByEmail,
             Token: token);
     }
 }

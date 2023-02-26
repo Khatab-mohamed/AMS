@@ -27,7 +27,7 @@ namespace AMS.Api.Controllers
 
             return authResult.Match(
                 authenticateResult => Ok(_mapper.Map<AuthenticateResponse>(authenticateResult)),
-                errors=> Problem(errors));
+                Problem);
         }
 
         
@@ -38,17 +38,17 @@ namespace AMS.Api.Controllers
             var query = _mapper.Map<LoginQuery>(request);
             var authResult = await _mediator.Send(query);
 
-            if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
-            {
-                return Problem(
-                    statusCode: StatusCodes.Status401Unauthorized,
-                    title: authResult.FirstError.Description);
-            }
+            //if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
+            //{
+            //    return Problem(
+            //        statusCode: StatusCodes.Status401Unauthorized,
+            //        title: authResult.FirstError.Description);
+            //}
 
 
             return authResult.Match(
                 authenticateResult => Ok(_mapper.Map<AuthenticateResponse>(authenticateResult)),
-                errors => Problem(errors));
+                Problem);
         }
     }
 }

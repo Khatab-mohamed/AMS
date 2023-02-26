@@ -1,13 +1,4 @@
-﻿using AMS.Application.Authentication.Common;
-using AMS.Application.Common.Interfaces.Authentication;
-using AMS.Application.Common.Interfaces.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AMS.Application.Authentication.Commands.Register;
+﻿namespace AMS.Application.Authentication.Commands.Register;
 public class RegisterCommandHandler: 
     IRequestHandler<RegisterCommand,ErrorOr<AuthenticateResult>>
 {

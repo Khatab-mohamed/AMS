@@ -1,6 +1,4 @@
-﻿using AMS.Application.Authentication.Common;
-
-namespace AMS.Application.Authentication.Commands.Register;
+﻿namespace AMS.Application.Authentication.Commands.Register;
 
 public record RegisterCommand(
     string FirstName,
