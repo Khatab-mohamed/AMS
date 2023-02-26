@@ -25,6 +25,7 @@ app.Map("/error", (HttpContext httpContext) =>
 });
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

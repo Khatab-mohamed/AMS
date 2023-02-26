@@ -10,6 +10,7 @@ global using AMS.Domain.Entities.Authentication;
 global using AMS.Infrastructure.Authentication;
 global using AMS.Infrastructure.Persistence;
 global using AMS.Infrastructure.Services;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
