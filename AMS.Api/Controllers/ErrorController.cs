@@ -1,6 +1,4 @@
-﻿using AMS.Application.Common.Errors;
-
-namespace AMS.Api.Controllers;
+﻿namespace AMS.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

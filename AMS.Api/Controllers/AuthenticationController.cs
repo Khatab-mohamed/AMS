@@ -25,9 +25,9 @@ namespace AMS.Api.Controllers
 
             var  authResult =  await _mediator.Send(command);
 
-            return authResult.MatchFirst(
+            return authResult.Match(
                 authenticateResult => Ok(_mapper.Map<AuthenticateResponse>(authenticateResult)),
-                firstError=> Problem(statusCode:StatusCodes.Status409Conflict,title:firstError.Description));
+                errors=> Problem(errors));
         }
 
         

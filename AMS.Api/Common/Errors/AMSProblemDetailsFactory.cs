@@ -1,6 +1,4 @@
-﻿using AMS.Api.Common.Http;
-
-namespace AMS.Api.Common.Errors;
+﻿namespace AMS.Api.Common.Errors;
 public class AmsProblemDetailsFactory : ProblemDetailsFactory
 {
 
