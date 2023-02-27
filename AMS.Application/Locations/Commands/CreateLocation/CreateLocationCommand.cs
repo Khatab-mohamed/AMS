@@ -1,6 +1,4 @@
-﻿using OneOf.Types;
-
-namespace AMS.Application.Locations.Commands.CreateLocation;
+﻿namespace AMS.Application.Locations.Commands.CreateLocation;
 
 public record CreateLocationCommand(
     string Name,
@@ -10,4 +8,4 @@ public record CreateLocationCommand(
     double Longitude,
     int AllowedDistance,
     bool IsPublic
-    ): IRequest<Error<Location>>, IRequest<ErrorOr<Location>>;
+    ): IRequest<ErrorOr<Location>>;

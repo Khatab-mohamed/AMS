@@ -13,7 +13,8 @@ namespace AMS.Api.Common.Mapping
             config.NewConfig<Location,CreateLocationRequest>()
                 // .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest, src => src);
-
+            config.NewConfig<Location,LocationResponse>()
+                .Map(dest => dest.Id, src => src.Id.Value);
 
         }
     }

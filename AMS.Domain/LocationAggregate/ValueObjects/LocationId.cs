@@ -6,7 +6,7 @@ public sealed class LocationId : ValueObject
         Value = value;
     }
 
-    private Guid Value { get; }
+    public Guid Value { get; }
 
     public static LocationId CreateUnique() => new(Guid.NewGuid());
 

@@ -7,7 +7,7 @@ namespace AMS.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class LocationsController : ControllerBase
+public class LocationsController : ApiController
 {
     
     private  readonly IMapper _mapper;
@@ -28,6 +28,9 @@ public class LocationsController : ControllerBase
         var createLocationResult =await  _mediator.Send(command);
 
 
-        return Ok(request);
+        return createLocationResult.Match(
+            location => Ok(_mapper.Map<LocationResponse>(location)),
+            Problem);
     }
+
 }
