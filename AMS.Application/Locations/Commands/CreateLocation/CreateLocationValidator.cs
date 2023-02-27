@@ -7,5 +7,6 @@ public class CreateLocationValidator : AbstractValidator<CreateLocationCommand>
         RuleFor(l => l.Name).NotEmpty().MaximumLength(100);
         RuleFor(l => l.Latitude).NotNull();
         RuleFor(l => l.Longitude).NotNull();
+        RuleFor(l => l.IsPublic).NotNull();
     }
 }
