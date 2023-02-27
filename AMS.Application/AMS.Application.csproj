@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Authentication\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <PropertyGroup>

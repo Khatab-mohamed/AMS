@@ -1,4 +1,6 @@
-﻿namespace AMS.Infrastructure.Persistence;
+﻿using AMS.Domain.UserAggregate;
+
+namespace AMS.Infrastructure.Persistence;
 
 public class UserRepository : IUserRepository
 {

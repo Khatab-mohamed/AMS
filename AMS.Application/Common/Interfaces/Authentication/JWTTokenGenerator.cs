@@ -1,4 +1,6 @@
-﻿namespace AMS.Application.Common.Interfaces.Authentication
+﻿using AMS.Domain.UserAggregate;
+
+namespace AMS.Application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace AMS.Domain.Entities.Common;
+﻿namespace AMS.Domain.UserAggregate.Common;
 public class Base
 {
     [Key]

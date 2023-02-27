@@ -1,4 +1,6 @@
 ﻿
+using AMS.Domain.UserAggregate;
+
 namespace AMS.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator

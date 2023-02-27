@@ -1,4 +1,6 @@
-﻿namespace AMS.Application.Authentication.Commands.Register;
+﻿using AMS.Domain.UserAggregate;
+
+namespace AMS.Application.Authentication.Commands.Register;
 public class RegisterCommandHandler: 
     IRequestHandler<RegisterCommand,ErrorOr<AuthenticateResult>>
 {

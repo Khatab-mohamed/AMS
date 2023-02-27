@@ -1,8 +1,6 @@
-﻿using AMS.Domain.Entities.Common;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using AMS.Domain.UserAggregate.Authentication;
 
-namespace AMS.Domain.Entities.Authentication;
+namespace AMS.Domain.UserAggregate;
 [Table("User")]
 public class User : Base
 {
@@ -20,7 +18,7 @@ public class User : Base
     public string Password { get; set; }
 
 
-   
+
     public Guid UserTypeId { get; set; }
     public UserType UserType { get; set; }
 }
